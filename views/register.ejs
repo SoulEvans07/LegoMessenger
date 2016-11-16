@@ -1,0 +1,36 @@
+<%- include('header', {title : 'Sign Up' }) %>
+<link rel="stylesheet" href="/css/messenger.css">
+<script src="js/messenger.js"></script>
+</head>
+<body>
+<!-- start: content -->
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 text-center">
+            <h2>Register</h2>
+        </div>
+        <div class="col-md-push-3 col-md-6 col-xs-12">
+            <%- include('errorbox') %>
+            <form method="POST">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" name="name" id="name" placeholder="Name">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="text" class="form-control" name="email" id="email" placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" name="password" id="password" placeholder="">
+                </div>
+                <input type="submit" class="btn btn-primary" value="Register" onclick="printData()"/>
+                <a href="/login" class="btn btn-info">Cancel</a>
+            </form>
+
+        </div>
+    </div>
+</div>
+<!-- end: content -->
+</body>
+</html>
