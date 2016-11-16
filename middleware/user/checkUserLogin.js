@@ -13,21 +13,19 @@ module.exports = function (objectrepository) {
     return function (req, res, next) {
 
         //not enough parameter
-        if ((typeof req.body === 'undefined') || (typeof req.body.email === 'undefined') ||
+        if ((typeof req.body === 'undefined') || (typeof req.body.name === 'undefined') ||
             (typeof req.body.password === 'undefined')) {
             return next();
         }
 
         //lets find the user
         userModel.findOne({
-            email: req.body.email
+            username: req.body.name
         }, function (err, user) {
             if ((err) || (!user)) {
                 res.tpl.error.push('Your email address is not registered!');
                 return next();
             }
-
-
 
             // * Check password
             bcrypt.compare(req.body.password, user.pwdhash, function (err, match) {
@@ -36,7 +34,6 @@ module.exports = function (objectrepository) {
                     return next();
                 }
 
-                console.log(match);
                 if(match){
                     // * Login is ok, save id to session
                     req.session.userid = user._id;

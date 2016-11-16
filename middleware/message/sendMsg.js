@@ -16,14 +16,14 @@ module.exports = function (objectrepository) {
         var user = entities.encode(req.body.user);
         var time = req.body.last;
 
-        messageModel.find( { 'seen.user' : { $ne: user } } ).populate('user').exec(function (err, results) {
+        messageModel.find( { 'seen.user' : { $ne: user } } ).populate('user').exec(function (err, msgs) {
             if(err){
                 res.tpl.error.push("cannot find messages");
                 console.log("cannot find messages : " + err);
                 return next();
             }
 
-            if(parseInt(results.length) > 0){
+            if(parseInt(msgs.length) > 0){
                 messageModel.update(
                     { 'seen.user' : { $ne: user } },
                     {$push:
@@ -42,13 +42,13 @@ module.exports = function (objectrepository) {
                     });
 
                 // * clear pwdhash TODO: not so nice in production .Soul
-                results.forEach(function (msg) {
+                msgs.forEach(function (msg) {
                     msg.user.pwdhash = 'nice try';
                 });
-                console.log("send msgs: " + JSON.stringify(results));
+                console.log("send msgs: " + JSON.stringify(msgs));
             }
 
-            res.end(JSON.stringify(results));
+            res.end(JSON.stringify(msgs));
 
             return next();
         });
